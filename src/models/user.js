@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsToMany(models.Role, {
+        through: "User_Roles",
+      });
     }
   }
   user.init(
@@ -41,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   user.beforeCreate((user) => {
-    const encryptedPassword = bcrypt.hashSync(user.password , SALT);
+    const encryptedPassword = bcrypt.hashSync(user.password, SALT);
     user.password = encryptedPassword;
   });
 
